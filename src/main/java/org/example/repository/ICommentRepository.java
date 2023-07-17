@@ -1,6 +1,8 @@
 package org.example.repository;
 
 import org.example.dto.CommentDTO;
+import org.example.dto.PostDTO;
+import org.example.dto.UserDTO;
 
 import java.util.List;
 
@@ -12,4 +14,8 @@ public interface ICommentRepository {
     List<CommentDTO> findAll();
 
     void removeById (Long id);
+
+    List<CommentDTO> getAllCommentsOfPost(PostDTO post);
+
+    List<CommentDTO> getAllCommentsOfPostOfUser(PostDTO post, UserDTO user);
 }

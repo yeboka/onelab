@@ -2,34 +2,76 @@ package org.example.repository.impl;
 
 import lombok.AllArgsConstructor;
 import org.example.dto.CommentDTO;
+import org.example.dto.PostDTO;
+import org.example.dto.UserDTO;
 import org.example.repository.ICommentRepository;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.jdbc.core.BeanPropertyRowMapper;
+import org.springframework.jdbc.core.JdbcTemplate;
+import org.springframework.jdbc.core.RowMapper;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
 
 
 @Repository
-@AllArgsConstructor
 public class CommentRepository implements ICommentRepository {
 
-    private List<CommentDTO> comments;
-    @Override
-    public void save(CommentDTO comment) {
-        comments.add(comment);
+    private final JdbcTemplate jdbcTemplate;
+
+    @Autowired
+    public CommentRepository (JdbcTemplate jdbcTemplate) {
+        this.jdbcTemplate = jdbcTemplate;
     }
 
     @Override
+    public void save(CommentDTO comment) {
+        jdbcTemplate.update("INSERT INTO Comment VALUES(?, ?, ?)", comment.getId(), comment.getPostId(), comment.getAuthorId(), comment.getText());
+    }
+
+
+    @Override
     public CommentDTO findById(Long id) {
-        return comments.stream().filter(comment -> comment.getId().equals(id)).findFirst().orElse(null);
+        String sql = "SELECT * FROM Comment WHERE id=? ";
+        RowMapper<CommentDTO> rowMapper = getCommentRowMapper();
+
+        return jdbcTemplate.query(sql, rowMapper, id).stream().findAny().orElse(null);
     }
 
     @Override
     public List<CommentDTO> findAll() {
-        return comments;
+        return jdbcTemplate.query("SELECT * FROM Comment", new BeanPropertyRowMapper<>(CommentDTO.class));
     }
 
     @Override
     public void removeById(Long id) {
-        comments.removeIf(comment -> comment.getId().equals(id));
+        jdbcTemplate.update("DELETE FROM Comment WHERE id=?", id);
+    }
+
+    @Override
+    public List<CommentDTO> getAllCommentsOfPost(PostDTO post) {
+        String sql = "SELECT * FROM Comment WHERE postId=? ";
+        RowMapper<CommentDTO> rowMapper = getCommentRowMapper();
+
+        return jdbcTemplate.query(sql, rowMapper, post.getId());
+    }
+
+    @Override
+    public List<CommentDTO> getAllCommentsOfPostOfUser(PostDTO post, UserDTO user) {
+        String sql = "SELECT * FROM Comment WHERE postId=? AND authorId=? ";
+        RowMapper<CommentDTO> rowMapper = getCommentRowMapper();
+
+        return jdbcTemplate.query(sql, rowMapper, post.getId(), user.getId());
+    }
+
+    private RowMapper<CommentDTO> getCommentRowMapper() {
+        return (rs, rowNum) -> {
+            CommentDTO comment = new CommentDTO();
+            comment.setId(rs.getLong("id"));
+            comment.setPostId(rs.getLong("postId"));
+            comment.setAuthorId(rs.getLong("authorId"));
+            comment.setText(rs.getString("text"));
+            return comment;
+        };
     }
 }

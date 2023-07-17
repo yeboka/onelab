@@ -1,37 +1,53 @@
 package org.example.repository.impl;
 
-import lombok.AllArgsConstructor;
 import org.example.dto.UserDTO;
 import org.example.repository.IUserRepository;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.jdbc.core.BeanPropertyRowMapper;
+import org.springframework.jdbc.core.JdbcTemplate;
+import org.springframework.jdbc.core.RowMapper;
 import org.springframework.stereotype.Repository;
 
-import java.util.ArrayList;
 import java.util.List;
 
 @Repository
-@AllArgsConstructor
 public class UserRepository implements IUserRepository
 {
-    private final List<UserDTO> users = new ArrayList<>();
+    private final JdbcTemplate jdbcTemplate;
+
+    @Autowired
+    public UserRepository (JdbcTemplate jdbcTemplate) {
+        this.jdbcTemplate = jdbcTemplate;
+
+    }
 
     @Override
     public void save(UserDTO user) {
-        users.add(user);
+        jdbcTemplate.update("INSERT INTO `USER` (id, name, age) VALUES(?, ?, ?)", user.getId(), user.getName(), user.getAge());
     }
 
     @Override
     public UserDTO findById(Long id) {
-        return users.stream().filter(user -> user.getId().equals(id)).findFirst().orElse(null);
+        String sql = "SELECT * FROM User WHERE id=? ";
+        RowMapper<UserDTO> rowMapper = (rs, rowNum) -> {
+            UserDTO user = new UserDTO();
+            user.setId(rs.getLong("id"));
+            user.setName(rs.getString("name"));
+            user.setAge(rs.getInt("age"));
+            return user;
+        };
+
+        return jdbcTemplate.query(sql, rowMapper, id).stream().findAny().orElse(null);
     }
 
     @Override
     public List<UserDTO> findAll() {
-        return users;
+        return jdbcTemplate.query("SELECT * FROM User", new BeanPropertyRowMapper<>(UserDTO.class));
     }
 
     @Override
     public void removeById(Long id) {
-        users.removeIf(user -> user.getId().equals(id));
+        jdbcTemplate.update("DELETE FROM User WHERE id=?", id);
     }
 
 }

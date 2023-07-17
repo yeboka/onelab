@@ -14,5 +14,4 @@ public class PostDTO {
     private Long id;
     private Long author_id;
     private String description;
-    private List<CommentDTO> comments;
 }

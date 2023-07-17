@@ -20,6 +20,8 @@ public class Main {
         UserDTO user = UserDTO.builder().id(1L).name("Yerbolat Mukan").age(19).build();
         UserDTO user2 = UserDTO.builder().id(2L).name("Zhanik Manik").age(0).build();
 
+        service.initTables();
+
         service.save(user);
         service.save(user2);
 
