@@ -5,11 +5,11 @@ import org.example.dto.UserDTO;
 import java.util.List;
 
 public interface IUserRepository {
-    boolean save(UserDTO user) ;
+    void save(UserDTO user) ;
     UserDTO findById(Long id);
     List<UserDTO> findAll();
 
-    boolean removeById (Long id);
+    void removeById (Long id);
 
 //    List<UserDTO> getSubscriptions(UserDTO user) ;
 }

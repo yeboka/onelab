@@ -5,10 +5,11 @@ import org.example.dto.CommentDTO;
 import java.util.List;
 
 public interface ICommentRepository {
-    boolean save(CommentDTO comment);
+    void save(CommentDTO comment);
 
     CommentDTO findById(Long id);
 
     List<CommentDTO> findAll();
 
+    void removeById (Long id);
 }

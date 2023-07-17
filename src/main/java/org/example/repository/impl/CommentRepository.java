@@ -14,8 +14,8 @@ public class CommentRepository implements ICommentRepository {
 
     private List<CommentDTO> comments;
     @Override
-    public boolean save(CommentDTO comment) {
-        return comments.add(comment);
+    public void save(CommentDTO comment) {
+        comments.add(comment);
     }
 
     @Override
@@ -25,8 +25,11 @@ public class CommentRepository implements ICommentRepository {
 
     @Override
     public List<CommentDTO> findAll() {
-        return comments
+        return comments;
+    }
 
-                ;
+    @Override
+    public void removeById(Long id) {
+        comments.removeIf(comment -> comment.getId().equals(id));
     }
 }

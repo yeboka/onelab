@@ -14,8 +14,8 @@ public class PostRepository implements IPostRepository {
 
     private final List<PostDTO> posts = new ArrayList<>();
     @Override
-    public boolean save(PostDTO post) {
-        return posts.add(post);
+    public void save(PostDTO post) {
+        posts.add(post);
     }
 
     @Override
@@ -27,4 +27,11 @@ public class PostRepository implements IPostRepository {
     public List<PostDTO> findAll() {
         return null;
     }
+
+    @Override
+    public void removeById(Long id) {
+        posts.removeIf(post -> post.getId().equals(id));
+    }
+
+
 }

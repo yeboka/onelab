@@ -15,8 +15,8 @@ public class UserRepository implements IUserRepository
     private final List<UserDTO> users = new ArrayList<>();
 
     @Override
-    public boolean save(UserDTO user) {
-        return users.add(user);
+    public void save(UserDTO user) {
+        users.add(user);
     }
 
     @Override
@@ -30,14 +30,8 @@ public class UserRepository implements IUserRepository
     }
 
     @Override
-    public boolean removeById(Long id) {
-        return users.removeIf(user -> user.getId().equals(id));
+    public void removeById(Long id) {
+        users.removeIf(user -> user.getId().equals(id));
     }
-
-
-//    @Override
-//    public List<UserDTO> getAllPosts(UserDTO user) {
-//        return null;
-//    }
 
 }

@@ -15,5 +15,6 @@ public class UserDTO {
     private String name;
     private int age;
     private List<PostDTO> posts;
+    private List<CommentDTO> comments;
 
 }

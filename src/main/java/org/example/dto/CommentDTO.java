@@ -1,14 +1,13 @@
 package org.example.dto;
 
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.*;
 
 @Getter
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
+@Builder
+@ToString
 public class CommentDTO {
     private Long id;
     private Long postId;
