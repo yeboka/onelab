@@ -25,13 +25,13 @@ public class PostRepository implements IPostRepository {
 
     @Override
     public void save(PostDTO post) {
-        jdbcTemplate.update("INSERT INTO Post VALUES(?, ?, ?)", post.getId(), post.getAuthor_id(), post.getDescription());
+        jdbcTemplate.update("INSERT INTO `post` VALUES(?, ?, ?)", post.getId(), post.getAuthor_id(), post.getDescription());
     }
 
 
     @Override
     public PostDTO findById(Long id) {
-        String sql = "SELECT * FROM Post WHERE id=? ";
+        String sql = "SELECT * FROM `post` WHERE id=? ";
         RowMapper<PostDTO> rowMapper = getPostRowMapper();
 
         return jdbcTemplate.query(sql, rowMapper, id).stream().findAny().orElse(null);
@@ -39,20 +39,32 @@ public class PostRepository implements IPostRepository {
 
     @Override
     public List<PostDTO> findAll() {
-        return jdbcTemplate.query("SELECT * FROM Post", new BeanPropertyRowMapper<>(PostDTO.class));
+        return jdbcTemplate.query("SELECT * FROM `post`", new BeanPropertyRowMapper<>(PostDTO.class));
     }
 
     @Override
     public void removeById(Long id) {
-        jdbcTemplate.update("DELETE FROM Post WHERE id=?", id);
+        jdbcTemplate.update("DELETE FROM `post` WHERE id=?", id);
     }
 
     @Override
     public List<PostDTO> getAllPostsOfUser(UserDTO userDTO) {
-        String sql = "SELECT * FROM Post WHERE author_id=? ";
+        String sql = "SELECT * FROM `post` WHERE author_id=? ";
         RowMapper<PostDTO> rowMapper = getPostRowMapper();
 
         return jdbcTemplate.query(sql, rowMapper, userDTO.getId());
+    }
+
+    @Override
+    public void createTable() {
+        String sql = "CREATE TABLE `post` (id BIGINT PRIMARY KEY, author_id BIGINT, description VARCHAR(255))";
+        jdbcTemplate.execute(sql);
+    }
+
+    @Override
+    public void dropTable() {
+        String sql = "DROP TABLE `post`";
+        jdbcTemplate.execute(sql);
     }
 
     private RowMapper<PostDTO> getPostRowMapper () {

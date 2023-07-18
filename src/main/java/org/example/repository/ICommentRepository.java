@@ -18,4 +18,8 @@ public interface ICommentRepository {
     List<CommentDTO> getAllCommentsOfPost(PostDTO post);
 
     List<CommentDTO> getAllCommentsOfPostOfUser(PostDTO post, UserDTO user);
+
+    void createTable();
+
+    void dropTable();
 }

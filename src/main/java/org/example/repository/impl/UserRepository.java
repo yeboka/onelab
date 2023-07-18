@@ -50,4 +50,19 @@ public class UserRepository implements IUserRepository
         jdbcTemplate.update("DELETE FROM `user` WHERE id=?", id);
     }
 
+    @Override
+    public void createTable() {
+        String sql = "CREATE TABLE `user` (id BIGINT PRIMARY KEY, name VARCHAR(255), age INT)";
+        jdbcTemplate.execute(sql);
+    }
+
+    @Override
+    public void dropTable() {
+        String sql = "DROP TABLE `user`";
+        jdbcTemplate.execute(sql);
+    }
+
 }
+
+
+

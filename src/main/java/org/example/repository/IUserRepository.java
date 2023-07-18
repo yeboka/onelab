@@ -5,11 +5,15 @@ import org.example.dto.UserDTO;
 import java.util.List;
 
 public interface IUserRepository {
-    void save(UserDTO user) ;
+    void save(UserDTO user);
+
     UserDTO findById(Long id);
+
     List<UserDTO> findAll();
 
-    void removeById (Long id);
+    void removeById(Long id);
 
-//    List<UserDTO> getSubscriptions(UserDTO user) ;
+    void createTable();
+
+    void dropTable();
 }

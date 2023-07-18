@@ -26,13 +26,13 @@ public class CommentRepository implements ICommentRepository {
 
     @Override
     public void save(CommentDTO comment) {
-        jdbcTemplate.update("INSERT INTO Comment VALUES(?, ?, ?)", comment.getId(), comment.getPostId(), comment.getAuthorId(), comment.getText());
+        jdbcTemplate.update("INSERT INTO `comment` (id, postId, authorId, text) VALUES(?, ?, ?, ?)", comment.getId(), comment.getPostId(), comment.getAuthorId(), comment.getText());
     }
 
 
     @Override
     public CommentDTO findById(Long id) {
-        String sql = "SELECT * FROM Comment WHERE id=? ";
+        String sql = "SELECT * FROM `comment` WHERE id=? ";
         RowMapper<CommentDTO> rowMapper = getCommentRowMapper();
 
         return jdbcTemplate.query(sql, rowMapper, id).stream().findAny().orElse(null);
@@ -40,17 +40,17 @@ public class CommentRepository implements ICommentRepository {
 
     @Override
     public List<CommentDTO> findAll() {
-        return jdbcTemplate.query("SELECT * FROM Comment", new BeanPropertyRowMapper<>(CommentDTO.class));
+        return jdbcTemplate.query("SELECT * FROM `comment`", new BeanPropertyRowMapper<>(CommentDTO.class));
     }
 
     @Override
     public void removeById(Long id) {
-        jdbcTemplate.update("DELETE FROM Comment WHERE id=?", id);
+        jdbcTemplate.update("DELETE FROM `comment` WHERE id=?", id);
     }
 
     @Override
     public List<CommentDTO> getAllCommentsOfPost(PostDTO post) {
-        String sql = "SELECT * FROM Comment WHERE postId=? ";
+        String sql = "SELECT * FROM `comment` WHERE postId=? ";
         RowMapper<CommentDTO> rowMapper = getCommentRowMapper();
 
         return jdbcTemplate.query(sql, rowMapper, post.getId());
@@ -58,10 +58,22 @@ public class CommentRepository implements ICommentRepository {
 
     @Override
     public List<CommentDTO> getAllCommentsOfPostOfUser(PostDTO post, UserDTO user) {
-        String sql = "SELECT * FROM Comment WHERE postId=? AND authorId=? ";
+        String sql = "SELECT * FROM `comment` WHERE postId=? AND authorId=? ";
         RowMapper<CommentDTO> rowMapper = getCommentRowMapper();
 
         return jdbcTemplate.query(sql, rowMapper, post.getId(), user.getId());
+    }
+
+    @Override
+    public void createTable() {
+        String sql = "CREATE TABLE `comment` (id BIGINT PRIMARY KEY, postId BIGINT, authorId BIGINT, text VARCHAR(255))";
+        jdbcTemplate.execute(sql);
+    }
+
+    @Override
+    public void dropTable() {
+        String sql = "DROP TABLE `comment`";
+        jdbcTemplate.execute(sql);
     }
 
     private RowMapper<CommentDTO> getCommentRowMapper() {

@@ -31,21 +31,20 @@ public class Main {
 
         System.out.println("After removing: ");
         service.findAllUser().forEach(System.out::println);
-//
-//        PostDTO post = PostDTO.builder().id(postId++).author_id(user.getId()).description("My first post").build();
-//
-//        CommentDTO comment1 = CommentDTO.builder().id(commentId++)
-//                .authorId(user.getId())
-//                .postId(post.getId()).text("My first comment")
-//                .build();
-//
-//        service.createPost(user, post);
-//        service.addComment(user, post, comment1);
-//
-//        System.out.println("All posts of user: " + user.getName());
-//        service.getAllPostsOfUser(user).forEach(System.out::println);
-//        System.out.println("All comments of user about post");
-//        service.getAllCommentsOfPostOfUser(post, user).forEach(System.out::println);
 
+        PostDTO post = PostDTO.builder().id(postId++).author_id(user.getId()).description("My first post").build();
+
+        CommentDTO comment1 = CommentDTO.builder().id(commentId++)
+                .authorId(user.getId())
+                .postId(post.getId()).text("My first comment")
+                .build();
+
+        service.createPost(user, post);
+        service.addComment(user, post, comment1);
+
+        System.out.println("All posts of user: " + user.getName());
+        service.getAllPostsOfUser(user).forEach(System.out::println);
+        System.out.println("All comments of user about post");
+        service.getAllCommentsOfPostOfUser(post, user).forEach(System.out::println);
     }
 }

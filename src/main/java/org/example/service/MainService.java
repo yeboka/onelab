@@ -1,19 +1,20 @@
 package org.example.service;
 
+import org.example.aspect.LoggerAspect;
 import org.example.dto.CommentDTO;
 import org.example.dto.PostDTO;
 import org.example.dto.UserDTO;
 import org.example.repository.impl.CommentRepository;
 import org.example.repository.impl.PostRepository;
 import org.example.repository.impl.UserRepository;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.jdbc.core.BeanPropertyRowMapper;
+import org.springframework.jdbc.BadSqlGrammarException;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Service;
 
-import java.util.ArrayList;
 import java.util.List;
-import java.util.stream.Collectors;
 
 @Service
 //@AllArgsConstructor
@@ -24,20 +25,27 @@ MainService {
     private final UserRepository userRepository;
     private final PostRepository postRepository;
     private final CommentRepository commentRepository;
-    private final JdbcTemplate jdbcTemplate;
+    private final Logger logger = LoggerFactory.getLogger(MainService.class);
 
     @Autowired
-    public MainService(UserRepository userRepository, PostRepository postRepository, CommentRepository commentRepository, JdbcTemplate jdbcTemplate) {
+    public MainService(UserRepository userRepository, PostRepository postRepository, CommentRepository commentRepository) {
         this.userRepository = userRepository;
         this.postRepository = postRepository;
         this.commentRepository = commentRepository;
-        this.jdbcTemplate = jdbcTemplate;
     }
 
     public void initTables() {
-//        String sql = "CREATE TABLE `user` (id BIGINT PRIMARY KEY, name VARCHAR(255), age INT)";
-
-//        jdbcTemplate.execute(sql);
+        try {
+            userRepository.dropTable();
+            commentRepository.dropTable();
+            postRepository.dropTable();
+            System.out.println("Tables dropped");
+        } catch (BadSqlGrammarException e) {
+            System.out.println("table not found");
+        }
+        userRepository.createTable();
+        commentRepository.createTable();
+        postRepository.createTable();
     }
 
     public void save(UserDTO userDTO) {

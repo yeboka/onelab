@@ -15,4 +15,8 @@ public interface IPostRepository {
     void removeById (Long id);
 
     List<PostDTO> getAllPostsOfUser(UserDTO userDTO);
+
+    void createTable();
+
+    void dropTable();
 }
