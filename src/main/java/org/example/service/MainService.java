@@ -7,6 +7,7 @@ import org.example.repository.impl.CommentRepository;
 import org.example.repository.impl.PostRepository;
 import org.example.repository.impl.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.jdbc.core.BeanPropertyRowMapper;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Service;
 
@@ -34,8 +35,9 @@ MainService {
     }
 
     public void initTables() {
-        String sql = "CREATE TABLE `USER` (id BIGINT PRIMARY KEY, name VARCHAR(255), age INT)";
-        jdbcTemplate.execute(sql);
+//        String sql = "CREATE TABLE `user` (id BIGINT PRIMARY KEY, name VARCHAR(255), age INT)";
+
+//        jdbcTemplate.execute(sql);
     }
 
     public void save(UserDTO userDTO) {

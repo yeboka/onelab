@@ -23,12 +23,12 @@ public class UserRepository implements IUserRepository
 
     @Override
     public void save(UserDTO user) {
-        jdbcTemplate.update("INSERT INTO `USER` (id, name, age) VALUES(?, ?, ?)", user.getId(), user.getName(), user.getAge());
+        jdbcTemplate.update("INSERT INTO `user` (id, name, age) VALUES(?, ?, ?)", user.getId(), user.getName(), user.getAge());
     }
 
     @Override
     public UserDTO findById(Long id) {
-        String sql = "SELECT * FROM User WHERE id=? ";
+        String sql = "SELECT * FROM `user` WHERE id=? ";
         RowMapper<UserDTO> rowMapper = (rs, rowNum) -> {
             UserDTO user = new UserDTO();
             user.setId(rs.getLong("id"));
@@ -42,12 +42,12 @@ public class UserRepository implements IUserRepository
 
     @Override
     public List<UserDTO> findAll() {
-        return jdbcTemplate.query("SELECT * FROM User", new BeanPropertyRowMapper<>(UserDTO.class));
+        return jdbcTemplate.query("SELECT * FROM `user`", new BeanPropertyRowMapper<>(UserDTO.class));
     }
 
     @Override
     public void removeById(Long id) {
-        jdbcTemplate.update("DELETE FROM User WHERE id=?", id);
+        jdbcTemplate.update("DELETE FROM `user` WHERE id=?", id);
     }
 
 }
