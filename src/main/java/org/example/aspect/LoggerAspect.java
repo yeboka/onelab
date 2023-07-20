@@ -14,13 +14,15 @@ import org.springframework.stereotype.Component;
 public class LoggerAspect {
     private final Logger logger = LoggerFactory.getLogger(LoggerAspect.class);
 
-    @Before("execution(* org.example.service.MainService.save(..)) && args(userDTO)")
+    @Before("execution(* org.example.service.UserService.save(..)) && args(userDTO)")
     public void logBeforeSave(JoinPoint joinPoint, UserDTO userDTO) {
         logger.info("Saving user with ID: {}", userDTO.getId());
     }
 
-    @AfterReturning("execution(* org.example.service.MainService.save(..)) && args(userDTO)")
+    @AfterReturning("execution(* org.example.service.UserService.save(..)) && args(userDTO)")
     public void logAfterSave(JoinPoint joinPoint, UserDTO userDTO) {
         logger.info("User saved with ID: {}", userDTO.getId());
     }
+
+
 }

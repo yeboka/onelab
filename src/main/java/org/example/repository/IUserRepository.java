@@ -12,8 +12,4 @@ public interface IUserRepository {
     List<UserDTO> findAll();
 
     void removeById(Long id);
-
-    void createTable();
-
-    void dropTable();
 }

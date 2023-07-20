@@ -1,6 +1,5 @@
 package org.example.repository.impl;
 
-import lombok.AllArgsConstructor;
 import org.example.dto.CommentDTO;
 import org.example.dto.PostDTO;
 import org.example.dto.UserDTO;
@@ -20,7 +19,7 @@ public class CommentRepository implements ICommentRepository {
     private final JdbcTemplate jdbcTemplate;
 
     @Autowired
-    public CommentRepository (JdbcTemplate jdbcTemplate) {
+    public CommentRepository(JdbcTemplate jdbcTemplate) {
         this.jdbcTemplate = jdbcTemplate;
     }
 
@@ -62,18 +61,6 @@ public class CommentRepository implements ICommentRepository {
         RowMapper<CommentDTO> rowMapper = getCommentRowMapper();
 
         return jdbcTemplate.query(sql, rowMapper, post.getId(), user.getId());
-    }
-
-    @Override
-    public void createTable() {
-        String sql = "CREATE TABLE `comment` (id BIGINT PRIMARY KEY, postId BIGINT, authorId BIGINT, text VARCHAR(255))";
-        jdbcTemplate.execute(sql);
-    }
-
-    @Override
-    public void dropTable() {
-        String sql = "DROP TABLE `comment`";
-        jdbcTemplate.execute(sql);
     }
 
     private RowMapper<CommentDTO> getCommentRowMapper() {

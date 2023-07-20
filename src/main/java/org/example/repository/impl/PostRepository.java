@@ -1,6 +1,5 @@
 package org.example.repository.impl;
 
-import lombok.AllArgsConstructor;
 import org.example.dto.PostDTO;
 import org.example.dto.UserDTO;
 import org.example.repository.IPostRepository;
@@ -10,7 +9,6 @@ import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.core.RowMapper;
 import org.springframework.stereotype.Repository;
 
-import java.util.ArrayList;
 import java.util.List;
 
 @Repository
@@ -19,7 +17,7 @@ public class PostRepository implements IPostRepository {
     private final JdbcTemplate jdbcTemplate;
 
     @Autowired
-    public PostRepository (JdbcTemplate jdbcTemplate) {
+    public PostRepository(JdbcTemplate jdbcTemplate) {
         this.jdbcTemplate = jdbcTemplate;
     }
 
@@ -55,19 +53,7 @@ public class PostRepository implements IPostRepository {
         return jdbcTemplate.query(sql, rowMapper, userDTO.getId());
     }
 
-    @Override
-    public void createTable() {
-        String sql = "CREATE TABLE `post` (id BIGINT PRIMARY KEY, author_id BIGINT, description VARCHAR(255))";
-        jdbcTemplate.execute(sql);
-    }
-
-    @Override
-    public void dropTable() {
-        String sql = "DROP TABLE `post`";
-        jdbcTemplate.execute(sql);
-    }
-
-    private RowMapper<PostDTO> getPostRowMapper () {
+    private RowMapper<PostDTO> getPostRowMapper() {
         return (rs, rowNum) -> {
             PostDTO post = new PostDTO();
             post.setId(rs.getLong("id"));

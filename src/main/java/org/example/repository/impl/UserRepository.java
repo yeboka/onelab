@@ -11,12 +11,11 @@ import org.springframework.stereotype.Repository;
 import java.util.List;
 
 @Repository
-public class UserRepository implements IUserRepository
-{
+public class UserRepository implements IUserRepository {
     private final JdbcTemplate jdbcTemplate;
 
     @Autowired
-    public UserRepository (JdbcTemplate jdbcTemplate) {
+    public UserRepository(JdbcTemplate jdbcTemplate) {
         this.jdbcTemplate = jdbcTemplate;
 
     }
@@ -50,17 +49,6 @@ public class UserRepository implements IUserRepository
         jdbcTemplate.update("DELETE FROM `user` WHERE id=?", id);
     }
 
-    @Override
-    public void createTable() {
-        String sql = "CREATE TABLE `user` (id BIGINT PRIMARY KEY, name VARCHAR(255), age INT)";
-        jdbcTemplate.execute(sql);
-    }
-
-    @Override
-    public void dropTable() {
-        String sql = "DROP TABLE `user`";
-        jdbcTemplate.execute(sql);
-    }
 
 }
 
