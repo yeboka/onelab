@@ -1,4 +1,4 @@
-INSERT INTO `user` (name, age)
+INSERT INTO `users` (name, age)
 VALUES ('John Doe', 30),
        ('Alice Smith', 25),
        ('Bob Johnson', 28),
@@ -42,3 +42,15 @@ VALUES (1, 2, 'Nice post!'),
        (10, 7, 'Can nott wait!'),
        (10, 9, 'Count me in!'),
        (10, 10, 'Sounds interesting!');
+
+INSERT INTO `subscriptions` (user_id, subscriber_id)
+VALUES (1, 2),
+       (1, 3),
+       (1, 4),
+       (2, 1),
+       (3, 1),
+       (4, 1),
+       (5, 2),
+       (6, 3),
+       (7, 4),
+       (8, 5);

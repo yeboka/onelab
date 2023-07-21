@@ -1,35 +1,28 @@
 package org.example.service;
 
 import org.example.dto.UserDTO;
-import org.example.repository.impl.UserRepository;
+import org.example.model.User;
+import org.example.repository.IUserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 
 @Service
 public class UserService {
 
-    private final UserRepository userRepository;
+    private final IUserRepository userRepository;
 
     @Autowired
-    public UserService(UserRepository userRepository) {
+    public UserService(IUserRepository userRepository) {
         this.userRepository = userRepository;
     }
 
-    public void save(UserDTO userDTO) {
-        userRepository.save(userDTO);
-    }
-
-    public List<UserDTO> findAllUser() {
+    @Transactional(readOnly = true)
+    public List<User> list() {
         return userRepository.findAll();
     }
 
-    public UserDTO findUserById(Long id) {
-        return userRepository.findById(id);
-    }
 
-    public void removeUserById(Long id) {
-        userRepository.removeById(id);
-    }
 }

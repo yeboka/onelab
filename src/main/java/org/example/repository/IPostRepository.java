@@ -1,18 +1,8 @@
 package org.example.repository;
 
-import org.example.dto.PostDTO;
-import org.example.dto.UserDTO;
+import org.example.model.Post;
+import org.springframework.data.jpa.repository.JpaRepository;
 
-import java.util.List;
+public interface IPostRepository extends JpaRepository<Post, Long> {
 
-public interface IPostRepository {
-    void save(PostDTO post);
-
-    PostDTO findById(Long id);
-
-    List<PostDTO> findAll();
-
-    void removeById (Long id);
-
-    List<PostDTO> getAllPostsOfUser(UserDTO userDTO);
 }

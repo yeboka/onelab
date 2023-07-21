@@ -4,9 +4,9 @@
 
 DROP TABLE IF EXISTS `comment`;
 DROP TABLE IF EXISTS `post`;
-DROP TABLE IF EXISTS `user`;
+DROP TABLE IF EXISTS `users`;
 
-CREATE TABLE `user`
+CREATE TABLE `users`
 (
     id   INT PRIMARY KEY AUTO_INCREMENT,
     name VARCHAR(255),
@@ -19,7 +19,7 @@ CREATE TABLE `post`
     author_id   BIGINT,
     description VARCHAR(255),
     numOfLikes  INT,
-    FOREIGN KEY (author_id) REFERENCES `user` (id) ON DELETE CASCADE
+    FOREIGN KEY (author_id) REFERENCES `users` (id) ON DELETE CASCADE
 );
 
 CREATE TABLE `comment`
@@ -29,5 +29,15 @@ CREATE TABLE `comment`
     authorId BIGINT,
     text     VARCHAR(255),
     FOREIGN KEY (postId) REFERENCES `post` (id) ON DELETE CASCADE,
-    FOREIGN KEY (authorId) REFERENCES `user` (id) ON DELETE CASCADE
+    FOREIGN KEY (authorId) REFERENCES `users` (id) ON DELETE CASCADE
 );
+
+CREATE TABLE `subscriptions`
+(
+    user_id       BIGINT,
+    subscriber_id BIGINT,
+    PRIMARY KEY (user_id, subscriber_id),
+    FOREIGN KEY (user_id) REFERENCES `users` (id),
+    FOREIGN KEY (subscriber_id) REFERENCES `users` (id)
+);
+
