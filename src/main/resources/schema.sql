@@ -19,7 +19,7 @@ CREATE TABLE `post`
     author_id   BIGINT,
     description VARCHAR(255),
     numOfLikes  INT,
-    FOREIGN KEY (author_id) REFERENCES `user` (id)
+    FOREIGN KEY (author_id) REFERENCES `user` (id) ON DELETE CASCADE
 );
 
 CREATE TABLE `comment`
@@ -28,6 +28,6 @@ CREATE TABLE `comment`
     postId   BIGINT,
     authorId BIGINT,
     text     VARCHAR(255),
-    FOREIGN KEY (postId) REFERENCES `post` (id),
-    FOREIGN KEY (authorId) REFERENCES `user` (id)
+    FOREIGN KEY (postId) REFERENCES `post` (id) ON DELETE CASCADE,
+    FOREIGN KEY (authorId) REFERENCES `user` (id) ON DELETE CASCADE
 );
