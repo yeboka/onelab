@@ -12,7 +12,6 @@ import java.util.List;
 @ToString
 public class PostDTO {
     private Long id;
-    private Long author_id;
     private String description;
     private int numOfLikes;
 }

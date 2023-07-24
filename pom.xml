@@ -17,7 +17,28 @@
     <dependency>
       <groupId>junit</groupId>
       <artifactId>junit</artifactId>
-      <version>3.8.1</version>
+      <version>4.13.2</version>
+      <scope>test</scope>
+    </dependency>
+
+    <dependency>
+      <groupId>org.junit.jupiter</groupId>
+      <artifactId>junit-jupiter-api</artifactId>
+      <version>5.9.3</version>
+      <scope>test</scope>
+    </dependency>
+
+    <dependency>
+      <groupId>org.junit.jupiter</groupId>
+      <artifactId>junit-jupiter-engine</artifactId>
+      <version>5.9.3</version>
+      <scope>test</scope>
+    </dependency>
+
+    <dependency>
+      <groupId>org.mockito</groupId>
+      <artifactId>mockito-core</artifactId>
+      <version>5.4.0</version>
       <scope>test</scope>
     </dependency>
 
@@ -48,14 +69,15 @@
     <dependency>
       <groupId>org.springframework.boot</groupId>
       <artifactId>spring-boot-starter</artifactId>
-      <version>3.1.1</version>
+      <version>3.1.2</version>
     </dependency>
 
-<!--    <dependency>-->
-<!--      <groupId>org.springframework.boot</groupId>-->
-<!--      <artifactId>spring-boot-starter-data-jpa</artifactId>-->
-<!--      <version>3.1.1</version>-->
-<!--    </dependency>-->
+    <dependency>
+      <groupId>org.springframework.boot</groupId>
+      <artifactId>spring-boot-starter-test</artifactId>
+      <version>3.1.2</version>
+      <scope>test</scope>
+    </dependency>
 
     <dependency>
       <groupId>javax.annotation</groupId>
@@ -78,16 +100,10 @@
     </dependency>
 
     <dependency>
-      <groupId>org.hibernate.orm</groupId>
+      <groupId>org.hibernate</groupId>
       <artifactId>hibernate-core</artifactId>
       <version>6.2.6.Final</version>
     </dependency>
-
-<!--    <dependency>-->
-<!--      <groupId>javax.persistence</groupId>-->
-<!--      <artifactId>javax.persistence-api</artifactId>-->
-<!--      <version>2.2</version>-->
-<!--    </dependency>-->
 
     <dependency>
       <groupId>org.hibernate.validator</groupId>
@@ -108,9 +124,27 @@
     </dependency>
 
     <dependency>
+      <groupId>org.springframework.kafka</groupId>
+      <artifactId>spring-kafka</artifactId>
+      <version>3.0.9</version>
+    </dependency>
+
+    <dependency>
+      <groupId>org.apache.kafka</groupId>
+      <artifactId>kafka-clients</artifactId>
+      <version>3.5.1</version>
+    </dependency>
+
+    <dependency>
       <groupId>org.aspectj</groupId>
       <artifactId>aspectjweaver</artifactId>
       <version>1.9.19</version>
+    </dependency>
+
+    <dependency>
+      <groupId>com.fasterxml.jackson.core</groupId>
+      <artifactId>jackson-databind</artifactId>
+      <version>2.15.2</version>
     </dependency>
 
     <dependency>
@@ -119,4 +153,16 @@
       <version>2.0.6</version>
     </dependency>
   </dependencies>
+  <build>
+    <plugins>
+      <plugin>
+        <groupId>org.apache.maven.plugins</groupId>
+        <artifactId>maven-compiler-plugin</artifactId>
+        <configuration>
+          <source>9</source>
+          <target>9</target>
+        </configuration>
+      </plugin>
+    </plugins>
+  </build>
 </project>
