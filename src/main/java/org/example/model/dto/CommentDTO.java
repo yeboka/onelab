@@ -1,15 +1,12 @@
-package org.example.dto;
+package org.example.model.dto;
 
 import lombok.*;
 
-@Getter
-@Setter
+@Data
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
-@ToString
 public class CommentDTO {
-
     private Long id;
     private Long postId;
     private Long authorId;

@@ -1,17 +1,13 @@
-package org.example.dto;
+package org.example.model.dto;
 
 import lombok.*;
 
-import java.util.List;
-
-@Getter
-@Setter
+@Data
 @AllArgsConstructor
 @NoArgsConstructor
 @Builder
-@ToString
 public class PostDTO {
-    private Long id;
+    private Integer id;
     private String description;
     private int numOfLikes;
 }

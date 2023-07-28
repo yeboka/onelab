@@ -9,6 +9,9 @@ import org.springframework.jdbc.datasource.DriverManagerDataSource;
 import org.springframework.orm.jpa.JpaTransactionManager;
 import org.springframework.orm.jpa.LocalContainerEntityManagerFactoryBean;
 import org.springframework.orm.jpa.vendor.HibernateJpaVendorAdapter;
+import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.security.core.userdetails.UserDetailsService;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.transaction.PlatformTransactionManager;
 import org.springframework.transaction.annotation.EnableTransactionManagement;
 
@@ -31,6 +34,7 @@ public class SpringConfig {
     private String username;
     @Value("${spring.datasource.password}")
     private String password;
+
 
     @Bean
     public DataSource dataSource() {
@@ -77,3 +81,4 @@ public class SpringConfig {
         return new JdbcTemplate(dataSource());
     }
 }
+

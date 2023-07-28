@@ -1,63 +1,57 @@
 package org.example.service;
 
-import org.example.model.Post;
+import lombok.RequiredArgsConstructor;
 import org.example.model.User;
+import org.example.model.dto.NewUserDTO;
+import org.example.model.dto.UserDTO;
 import org.example.repository.IPostRepository;
 import org.example.repository.IUserRepository;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.domain.Example;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Service
+@RequiredArgsConstructor
 public class UserService {
     private final IUserRepository userRepository;
     private final IPostRepository postRepository;
 
-    @Autowired
-    public UserService(IUserRepository userRepository, IPostRepository postRepository) {
-        this.userRepository = userRepository;
-        this.postRepository = postRepository;
+    @Transactional
+    public UserDTO save(NewUserDTO userDTO) {
+        User user = User.builder()
+                .name(userDTO.getName())
+                .age(userDTO.getAge())
+                .build();
+
+        User response = userRepository.save(user);
+
+        return UserDTO.builder()
+                .id(response.getId())
+                .name(response.getName())
+                .age(response.getAge())
+                .build();
     }
 
     @Transactional(readOnly = true)
-    public List<User> list() {
-        return userRepository.findAll();
-    }
-
-    @Transactional(readOnly = true)
-    public User getMostPopularUser() {
+    public List<UserDTO> list() {
         List<User> users = userRepository.findAll();
-        return users.stream().max(Comparator.comparingInt(user -> user.getSubscribers().size())).orElse(null);
-    }
-
-    @Transactional
-    public List<Post> getPopularPostsOfUser(User user) {
-        return postRepository.findPostWithMostLikes(user);
+        return userDTOMapper(users);
     }
 
     @Transactional(readOnly = true)
-    public List<Post> getAllPostOfSubscribersOfUser(Long id) {
-        List<Post> posts = new ArrayList<>();
-        User user = userRepository.findById(id).get();
+    public UserDTO getMostPopularUser() {
+        User user = userRepository.findAll().stream().max(
+                Comparator.comparingInt(temp -> temp.getSubscribers().size())
+        ).orElse(new User());
 
-        for (User subscription :
-                user.getSubscriptions()) {
-            posts.addAll(postRepository.findAllByAuthor(subscription.getId()));
-        }
-
-        return posts;
-    }
-
-    @Transactional
-    public void removeFirstPostWithMinAmountOfLikes() {
-        Post post = postRepository.findPostsWithMinAmountOfLikes().get(0);
-
-        postRepository.delete(post);
+        return UserDTO.builder()
+                .id(user.getId())
+                .name(user.getName())
+                .age(user.getAge())
+                .build();
     }
 
     @Transactional
@@ -69,10 +63,15 @@ public class UserService {
         userRepository.save(user);
     }
 
-    @Transactional(readOnly = true)
-    public List<Post> searchPostsStartsWith(String text) {
-        return postRepository.findByDescriptionStartingWith(text);
+    private List<UserDTO> userDTOMapper(List<User> users) {
+        return users.stream().map(
+                        user -> UserDTO.builder()
+                                .id(user.getId())
+                                .name(user.getName())
+                                .age(user.getAge())
+                                .build())
+                .collect(Collectors.toList());
     }
-
-
 }
+
+

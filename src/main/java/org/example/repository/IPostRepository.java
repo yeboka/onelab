@@ -19,5 +19,5 @@ public interface IPostRepository extends JpaRepository<Post, Long>, QueryByExamp
 
     List<Post> findByDescriptionStartingWith(String description);
 
-    List<Post> findAllByAuthor(Long id);
+    List<Post> findAllByAuthor(User author);
 }

@@ -8,8 +8,7 @@ import java.util.List;
 
 @Entity
 @Table(name = "post")
-@Setter
-@Getter
+@Data
 @Builder
 @AllArgsConstructor
 @NoArgsConstructor
@@ -30,6 +29,7 @@ public class Post {
     @Column(name = "numOfLikes")
     private Integer numOfLikes;
 
+    @ToString.Exclude
     @OneToMany(mappedBy = "post")
     List<Comment> comments = new ArrayList<>();
 

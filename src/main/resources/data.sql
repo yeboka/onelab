@@ -1,14 +1,14 @@
-INSERT INTO `users` (name, age)
-VALUES ('John Doe', 30),
-       ('Alice Smith', 25),
-       ('Bob Johnson', 28),
-       ('Emma Brown', 22),
-       ('Michael Lee', 35),
-       ('Sophia Wilson', 29),
-       ('James Taylor', 27),
-       ('Olivia Anderson', 31),
-       ('William Martinez', 26),
-       ('Emily Davis', 24);
+INSERT INTO `users` (name, age, password)
+VALUES ('John Doe', 30, '123'),
+       ('Alice Smith', 25, '133'),
+       ('Bob Johnson', 28, '123'),
+       ('Emma Brown', 22, '123'),
+       ('Michael Lee', 35, '123'),
+       ('Sophia Wilson', 29, '123'),
+       ('James Taylor', 27, '123'),
+       ('Olivia Anderson', 31, '123'),
+       ('William Martinez', 26, '123'),
+       ('Emily Davis', 24, '123');
 
 INSERT INTO `post` (author_id, description, numOfLikes)
 VALUES (1, 'This is a post by John Doe', 0),
@@ -31,7 +31,7 @@ VALUES (1, 2, 'Nice post!'),
        (3, 4, 'Where is this place?'),
        (4, 9, 'Yum! I will try this recipe.'),
        (4, 10, 'Congratulations on your new recipe!'),
-       (5, 7, 'I loved that movie too.'),
+       (5, 7, 'I loved that movipostRepository.findAllByAuthor(subscription)e too.'),
        (6, 8, 'Have a great weekend!'),
        (7, 3, 'Beautiful view!'),
        (8, 6, 'Good luck with your project!'),
