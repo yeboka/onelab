@@ -19,22 +19,6 @@ public class UserService {
     private final IUserRepository userRepository;
     private final IPostRepository postRepository;
 
-    @Transactional
-    public UserDTO save(NewUserDTO userDTO) {
-        User user = User.builder()
-                .name(userDTO.getName())
-                .age(userDTO.getAge())
-                .build();
-
-        User response = userRepository.save(user);
-
-        return UserDTO.builder()
-                .id(response.getId())
-                .name(response.getName())
-                .age(response.getAge())
-                .build();
-    }
-
     @Transactional(readOnly = true)
     public List<UserDTO> list() {
         List<User> users = userRepository.findAll();
