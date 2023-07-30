@@ -2,8 +2,7 @@ package org.example.service;
 
 import lombok.RequiredArgsConstructor;
 import org.example.model.User;
-import org.example.model.dto.NewUserDTO;
-import org.example.model.dto.UserDTO;
+import org.example.model.dto.UserDTORecord;
 import org.example.repository.IPostRepository;
 import org.example.repository.IUserRepository;
 import org.springframework.stereotype.Service;
@@ -20,22 +19,20 @@ public class UserService {
     private final IPostRepository postRepository;
 
     @Transactional(readOnly = true)
-    public List<UserDTO> list() {
+    public List<UserDTORecord> list() {
         List<User> users = userRepository.findAll();
         return userDTOMapper(users);
     }
 
     @Transactional(readOnly = true)
-    public UserDTO getMostPopularUser() {
+    public UserDTORecord getMostPopularUser() {
         User user = userRepository.findAll().stream().max(
                 Comparator.comparingInt(temp -> temp.getSubscribers().size())
         ).orElse(new User());
 
-        return UserDTO.builder()
-                .id(user.getId())
-                .name(user.getName())
-                .age(user.getAge())
-                .build();
+        return new UserDTORecord(user.getId(),
+                user.getName(),
+                user.getAge());
     }
 
     @Transactional
@@ -47,13 +44,11 @@ public class UserService {
         userRepository.save(user);
     }
 
-    private List<UserDTO> userDTOMapper(List<User> users) {
+    private List<UserDTORecord> userDTOMapper(List<User> users) {
         return users.stream().map(
-                        user -> UserDTO.builder()
-                                .id(user.getId())
-                                .name(user.getName())
-                                .age(user.getAge())
-                                .build())
+                        user -> new UserDTORecord(user.getId(),
+                                user.getName(),
+                                user.getAge()))
                 .collect(Collectors.toList());
     }
 }

@@ -2,7 +2,7 @@ package org.example.service;
 
 import org.example.model.Post;
 import org.example.model.User;
-import org.example.model.dto.PostDTO;
+import org.example.model.dto.PostDTORecord;
 import org.example.repository.IPostRepository;
 import org.example.repository.IUserRepository;
 import org.junit.jupiter.api.BeforeEach;
@@ -14,7 +14,7 @@ import org.mockito.MockitoAnnotations;
 import java.util.List;
 import java.util.Optional;
 
-import static org.junit.Assert.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.mockito.Mockito.*;
 
 public class PostServiceTest {
@@ -46,7 +46,7 @@ public class PostServiceTest {
         when(userRepository.findById(userId)).thenReturn(Optional.of(user));
         when(postRepository.findAllByAuthor(subscription1)).thenReturn(List.of(post1, post2));
 
-        List<PostDTO> result = postService.getPostsFeed(userId);
+        List<PostDTORecord> result = postService.getPostsFeed(userId);
 
         assertEquals(2, result.size());
     }
@@ -60,7 +60,7 @@ public class PostServiceTest {
 
         when(postRepository.findByDescriptionStartingWith(searchText)).thenReturn(List.of(post1, post2));
 
-        List<PostDTO> result = postService.searchPostsStartsWith(searchText);
+        List<PostDTORecord> result = postService.searchPostsStartsWith(searchText);
 
         assertEquals(2, result.size());
     }

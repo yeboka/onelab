@@ -1,7 +1,7 @@
 package org.example.service;
 
 import org.example.model.User;
-import org.example.model.dto.UserDTO;
+import org.example.model.dto.UserDTORecord;
 import org.example.repository.IPostRepository;
 import org.example.repository.IUserRepository;
 import org.junit.jupiter.api.BeforeEach;
@@ -37,11 +37,11 @@ class UserServiceTest {
 
         when(userRepository.findAll()).thenReturn(List.of(user1, user2));
 
-        List<UserDTO> result = userService.list();
+        List<UserDTORecord> result = userService.list();
 
         assertEquals(2, result.size());
-        assertEquals(user1.getId(), result.get(0).getId());
-        assertEquals(user2.getId(), result.get(1).getId());
+        assertEquals(user1.getId(), result.get(0).id());
+        assertEquals(user2.getId(), result.get(1).id());
 
         verify(userRepository, times(1)).findAll();
     }

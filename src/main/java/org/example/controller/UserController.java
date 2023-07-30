@@ -1,7 +1,7 @@
 package org.example.controller;
 
 import lombok.RequiredArgsConstructor;
-import org.example.model.dto.UserDTO;
+import org.example.model.dto.UserDTORecord;
 import org.example.service.UserService;
 import org.springframework.web.bind.annotation.*;
 
@@ -15,12 +15,12 @@ public class UserController {
     private final UserService userService;
 
     @GetMapping
-    public List<UserDTO> list() {
+    public List<UserDTORecord> list() {
         return userService.list();
     }
 
-    @GetMapping("/most_popular_user")
-    public UserDTO getMostPopularUser() {
+        @GetMapping("/most_popular_user")
+    public UserDTORecord getMostPopularUser() {
         return userService.getMostPopularUser();
     }
 

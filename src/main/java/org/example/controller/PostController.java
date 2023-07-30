@@ -1,7 +1,7 @@
 package org.example.controller;
 
 import lombok.RequiredArgsConstructor;
-import org.example.model.dto.PostDTO;
+import org.example.model.dto.PostDTORecord;
 import org.example.service.PostService;
 import org.springframework.web.bind.annotation.*;
 
@@ -15,12 +15,12 @@ public class PostController {
     private final PostService postService;
 
     @GetMapping("/{id}")
-    public List<PostDTO> getPostFeed(@PathVariable Long id) {
+    public List<PostDTORecord> getPostFeed(@PathVariable Long id) {
         return postService.getPostsFeed(id);
     }
 
     @GetMapping("/start={text}")
-    public List<PostDTO> getPostsStartsWith(@PathVariable String text) {
+    public List<PostDTORecord> getPostsStartsWith(@PathVariable String text) {
         return postService.searchPostsStartsWith(text);
     }
 

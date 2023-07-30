@@ -1,6 +1,6 @@
 package org.example.controller;
 
-import org.example.model.dto.UserDTO;
+import org.example.model.dto.UserDTORecord;
 import org.example.service.UserService;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -37,9 +37,9 @@ public class UserControllerIntegrationTest {
 
     @Test
     public void testListUsers() throws Exception {
-        List<UserDTO> mockUsers = Arrays.asList(
-                UserDTO.builder().id(1L).name("John").build(),
-                UserDTO.builder().id(2L).name("Jane").build()
+        List<UserDTORecord> mockUsers = Arrays.asList(
+                new UserDTORecord(1L, "John", 19),
+                new UserDTORecord(2L, "Jane", 21)
         );
         when(userService.list()).thenReturn(mockUsers);
 
@@ -55,7 +55,7 @@ public class UserControllerIntegrationTest {
 
     @Test
     public void testGetMostPopularUser() throws Exception {
-        UserDTO mockUser = UserDTO.builder().id(1L).name("John").build();
+        UserDTORecord mockUser =  new UserDTORecord(1L, "John", 19);
         when(userService.getMostPopularUser()).thenReturn(mockUser);
 
         mockMvc.perform(get("/api/v1/users/most_popular_user"))

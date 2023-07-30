@@ -1,6 +1,6 @@
 package org.example.controller;
 
-import org.example.model.dto.PostDTO;
+import org.example.model.dto.PostDTORecord;
 import org.example.service.PostService;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -37,15 +37,13 @@ public class PostControllerIntegrationTest {
 
     @Test
     public void testGetPostFeed() throws Exception {
-        // Arrange
         Long userId = 1L;
-        List<PostDTO> mockPosts = Arrays.asList(
-                PostDTO.builder().id(1).description("LALA").numOfLikes(12).build(),
-                PostDTO.builder().id(2).description("OKIOKI").numOfLikes(10).build()
+        List<PostDTORecord> mockPosts = Arrays.asList(
+                new PostDTORecord(1, "LALA", 12),
+                new PostDTORecord(2, "OKIOKI", 10)
         );
         when(postService.getPostsFeed(userId)).thenReturn(mockPosts);
 
-        // Act & Assert
         mockMvc.perform(get("/api/v1/posts/{id}", userId))
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$[0].id").value(1))
@@ -60,15 +58,13 @@ public class PostControllerIntegrationTest {
 
     @Test
     public void testGetPostsStartsWith() throws Exception {
-        // Arrange
         String text = "test";
-        List<PostDTO> mockPosts = Arrays.asList(
-                PostDTO.builder().id(1).description("LALA").numOfLikes(12).build(),
-                PostDTO.builder().id(2).description("OKIOKI").numOfLikes(10).build()
+        List<PostDTORecord> mockPosts = Arrays.asList(
+                new PostDTORecord(1, "LALA", 12),
+                new PostDTORecord(2, "OKIOKI", 10)
         );
         when(postService.searchPostsStartsWith(text)).thenReturn(mockPosts);
 
-        // Act & Assert
         mockMvc.perform(get("/api/v1/posts/start={text}", text))
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$[0].id").value(1))
@@ -83,7 +79,6 @@ public class PostControllerIntegrationTest {
 
     @Test
     public void testRemoveLoser() throws Exception {
-        // Act & Assert
         mockMvc.perform(delete("/api/v1/posts/remove_loser"))
                 .andExpect(status().isOk());
 
