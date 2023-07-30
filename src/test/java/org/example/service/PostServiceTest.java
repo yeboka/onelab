@@ -1,5 +1,6 @@
 package org.example.service;
 
+import org.example.exception.UserNotFoundException;
 import org.example.model.Post;
 import org.example.model.User;
 import org.example.model.dto.PostDTORecord;
@@ -17,7 +18,7 @@ import java.util.Optional;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.mockito.Mockito.*;
 
-public class PostServiceTest {
+class PostServiceTest {
     @Mock
     IUserRepository userRepository;
     @Mock
@@ -31,7 +32,7 @@ public class PostServiceTest {
     }
 
     @Test
-    void testGetPostsFeedWithValidUserId() {
+    void testGetPostsFeedWithValidUserId() throws UserNotFoundException {
         Long userId = 1L;
         User user = new User();
         user.setId(userId);
@@ -52,7 +53,7 @@ public class PostServiceTest {
     }
 
     @Test
-    public void testSearchPostsStartsWith() {
+    void testSearchPostsStartsWith() {
         String searchText = "test";
 
         Post post1 = Post.builder().id(101).numOfLikes(9).description("Test 1").build();

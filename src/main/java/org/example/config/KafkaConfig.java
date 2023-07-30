@@ -1,5 +1,6 @@
 package org.example.config;
 
+import org.example.model.dto.CommentNotificationRecord;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -23,7 +24,7 @@ public class KafkaConfig {
     private String groupId;
 
     @Bean
-    public ProducerFactory<String, String> producerFactory() {
+    public ProducerFactory<Object, CommentNotificationRecord> producerFactory() {
         Map<String, Object> configProps = new HashMap<>();
         configProps.put(org.apache.kafka.clients.producer.ProducerConfig.BOOTSTRAP_SERVERS_CONFIG, bootstrapAddress);
         configProps.put(org.apache.kafka.clients.producer.ProducerConfig.KEY_SERIALIZER_CLASS_CONFIG, org.apache.kafka.common.serialization.StringSerializer.class);
@@ -32,7 +33,7 @@ public class KafkaConfig {
     }
 
     @Bean
-    public KafkaTemplate<String, String> kafkaTemplate() {
+    public KafkaTemplate<Object, CommentNotificationRecord> kafkaTemplate() {
         return new KafkaTemplate<>(producerFactory());
     }
 

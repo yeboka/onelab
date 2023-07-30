@@ -1,22 +1,24 @@
 package org.example.service;
 
 import lombok.RequiredArgsConstructor;
+import org.example.model.CommentObserver;
+import org.example.model.Post;
 import org.example.model.User;
+import org.example.model.dto.CommentNotificationRecord;
 import org.example.model.dto.UserDTORecord;
-import org.example.repository.IPostRepository;
 import org.example.repository.IUserRepository;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.Comparator;
 import java.util.List;
-import java.util.stream.Collectors;
 
 @Service
 @RequiredArgsConstructor
-public class UserService {
+public class UserService implements CommentObserver {
     private final IUserRepository userRepository;
-    private final IPostRepository postRepository;
+
+    private final JmsService jmsService;
 
     @Transactional(readOnly = true)
     public List<UserDTORecord> list() {
@@ -49,7 +51,18 @@ public class UserService {
                         user -> new UserDTORecord(user.getId(),
                                 user.getName(),
                                 user.getAge()))
-                .collect(Collectors.toList());
+                .toList();
+    }
+
+    @Override
+    public void update(Post post, String commentText) {
+        String topic = "test";
+
+        CommentNotificationRecord notificationRecord =
+                new CommentNotificationRecord(post.getAuthor().getId(),
+                        post.getId(),
+                        commentText);
+        jmsService.sendCommentNotification(topic, notificationRecord);
     }
 }
 

@@ -2,6 +2,7 @@ package org.example.service;
 
 
 import org.example.jms.KafkaProducer;
+import org.example.model.dto.CommentNotificationRecord;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -15,7 +16,7 @@ public class JmsService {
         this.kafkaProducer = kafkaProducer;
     }
 
-    public void sendUser(String topic, String name) {
-        kafkaProducer.sendUser(topic, name);
+    public void sendCommentNotification(String topic, CommentNotificationRecord notificationRecord) {
+        kafkaProducer.sendCommentNotification(topic, notificationRecord);
     }
 }
