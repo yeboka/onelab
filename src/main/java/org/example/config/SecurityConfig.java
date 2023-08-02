@@ -28,7 +28,7 @@ public class SecurityConfig {
 
         http
                 .authorizeHttpRequests(authorize -> authorize
-                        .requestMatchers(mvcMatcherBuilder.pattern("/api/v1/auth/**")).permitAll()
+                        .requestMatchers(mvcMatcherBuilder.pattern("/api/v1/auth/**"), mvcMatcherBuilder.pattern("/api/v1/public/**")).permitAll()
                         .anyRequest().authenticated()
                 )
                 .sessionManagement(session -> session

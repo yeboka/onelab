@@ -28,6 +28,7 @@ public class PostController {
         }
     }
 
+
     @GetMapping("/{userId}/post={postId}")
     public PostDTORecord getPostOfUser(@PathVariable Long userId, @PathVariable Integer postId) {
         try {

@@ -54,6 +54,16 @@ public class PostService {
         return postDTOMapper(postRepository.findByDescriptionStartingWith(text));
     }
 
+    @Transactional(readOnly = true)
+    public List<PostDTORecord> getPostsOfUser(Long id) throws UserNotFoundException {
+        User user = userRepository.findById(id).orElseThrow(
+                () -> new UserNotFoundException(String.format("User with id %d doesn't exist!", id)));
+        List<Post> posts = postRepository.findAllByAuthor(user);
+
+        return postDTOMapper(posts);
+    }
+
+    @Transactional(readOnly = true)
     public PostDTORecord getPostOfUser(Long userId, Integer postId) throws UserNotFoundException {
         User user = userRepository.findById(userId).orElseThrow(
                 () -> new UserNotFoundException(String.format("User with id %d doesn't exist!", userId)));
