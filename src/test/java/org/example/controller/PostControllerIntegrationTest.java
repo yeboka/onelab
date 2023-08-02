@@ -36,7 +36,7 @@ class PostControllerIntegrationTest {
     }
 
     @Test
-    public void testGetPostFeed() throws Exception {
+    void testGetPostFeed() throws Exception {
         Long userId = 1L;
         List<PostDTORecord> mockPosts = Arrays.asList(
                 new PostDTORecord(1, "LALA", 12),
@@ -57,7 +57,7 @@ class PostControllerIntegrationTest {
     }
 
     @Test
-    public void testGetPostsStartsWith() throws Exception {
+    void testGetPostsStartsWith() throws Exception {
         String text = "test";
         List<PostDTORecord> mockPosts = Arrays.asList(
                 new PostDTORecord(1, "LALA", 12),
@@ -78,7 +78,7 @@ class PostControllerIntegrationTest {
     }
 
     @Test
-    public void testRemoveLoser() throws Exception {
+    void testRemoveLoser() throws Exception {
         mockMvc.perform(delete("/api/v1/posts/remove_loser"))
                 .andExpect(status().isOk());
 

@@ -37,6 +37,8 @@ public class LoggingAspect {
         String url = request.getRequestURL().toString();
         String username = request.getRemoteUser();
 
+        request.setAttribute("requestTime", System.currentTimeMillis());
+
         logger.info("Request IP: {}", ip);
         logger.info("Request URL: {}", url);
         logger.info("Request Username: {}", username);
@@ -45,9 +47,12 @@ public class LoggingAspect {
     @AfterReturning(pointcut = "controllerMethods()", returning = "result")
     public void logAfter(JoinPoint joinPoint, Object result) {
         int statusCode = response.getStatus();
+        long responseTime = System.currentTimeMillis();
+        responseTime -= (long) request.getAttribute("requestTime");
+
         if (statusCode == 200)
-            logger.info("Response: {}", result);
+            logger.info("Response: {}, duration: {}ms", result, responseTime);
         else
-            logger.error("Response: {}", result);
+            logger.error("Response: {}, duration: {}ms", result, responseTime);
     }
 }
